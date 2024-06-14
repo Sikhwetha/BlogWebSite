@@ -58,19 +58,20 @@ const Navbar = () => {
         {/* menu icons */}
 
         <div className="text-white lg:flex gap-4 items-center hidden">
-          <a href="/" className="hover:text-orange-600">
+          <a href="https://www.facebook.com/mulanga.sikhwetha.7" className="hover:text-orange-600">
             <BsFacebook />{" "}
           </a>
-          <a href="/" className="hover:text-orange-600">
+          <a href="https://x.com/BlenderModeling" className="hover:text-orange-600">
             <IoLogoTwitter />{" "}
           </a>
-          <a href="/" className="hover:text-orange-600">
+          <a href="https://www.instagram.com/sikhweth_mulanga/" className="hover:text-orange-600">
             <FaInstagram />{" "}
           </a>
 
-          <button onClick={openModel} className="bg-green-500 px-4 py-2 font-medium rounded hover:bg-orange-500 hover:text-green-400 transition-all duration-200 ease-in">
+          {/* <button onClick={openModel} className="bg-green-500 px-4 py-2 font-medium rounded hover:bg-orange-500 hover:text-green-400 transition-all duration-200 ease-in">
             Log in
-          </button>
+          </button> */
+          }
         </div>
 
         {/* our model */}

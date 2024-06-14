@@ -25,7 +25,7 @@ const Blogpage = () => {
         const response = await axios.get(url);
         const data = response.data;
         console.log(data);
-        setBlogs(data); // Assuming data is an array of blogs
+        setBlogs(data ); // Assuming data is an array of blogs
       } catch (error) {
         console.error('Error fetching data:', error);
         // Handle error state here if needed

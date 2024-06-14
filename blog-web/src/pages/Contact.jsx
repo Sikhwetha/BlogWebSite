@@ -2,11 +2,15 @@ import React from "react";
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center md:mt-20 py-12 px-4 sm:px-6 lg:px-8">
+    <>
+    <div className="w-full h-[300px] mt-14  text-center text-3xl md:text-5xl font-extrabold ">
+      <h1 className="pt-32 ">contact us</h1>
+    </div>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
       
       <div className="max-w-4xl w-full bg-white shadow-md rounded-lg p-8">
-        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-6">
-          Contact Us
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 capitalize mb-6">
+          Get in touch
         </h2>
         <header className="mb-12 text-center">
        
@@ -156,6 +160,7 @@ const ContactPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
