@@ -1,8 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
+import AdModal from './AdModal';
 
 const Blogpost = ({ blogs, handleDelete, handleEdit, currentpage, selectedcategory, pageSize }) => {
+  const [isAdOpen, setIsAdOpen] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState('');
+
+  const handleCardClick = (url) => {
+    setRedirectUrl(url);
+    setIsAdOpen(true);
+  };
+
+  const handleAdEnd = () => {
+    setIsAdOpen(false);
+    window.location.href = redirectUrl; // or handle navigation as needed
+  };
+
   const filteredBlogs = blogs
     .filter(blog => !selectedcategory || blog.category === selectedcategory)
     .slice((currentpage - 1) * pageSize, currentpage * pageSize); 
@@ -15,14 +28,17 @@ const Blogpost = ({ blogs, handleDelete, handleEdit, currentpage, selectedcatego
 
         return (
           <div key={blog.id} className='p-5 rounded shadow-lg'>
-            <Link to={`/blogposts/${blog.id}`} className='cursor-pointer'>
+            <a href={`/blogposts/${blog.id}`} className='cursor-pointer' onClick={(e) => {
+              e.preventDefault(); // Prevent default behavior of anchor tag
+              handleCardClick(`/blogposts/${blog.id}`); // Set modal redirect URL
+            }}>
               <div>
                 <img src={blog.image} alt="" className='w-full h-48 object-cover rounded' />
               </div>
               <h3 className='mt-4 mb-2 font-bold hover:text-green-500 cursor-pointer'>{blog.title}</h3>
-              <p className='mb-2 text-gray-500'> <img src={blog.picture} alt="blog.picture" className="inline-flex items-center w-10 h-10 rounded-full mr-2" />{blog.author}</p>
+              <p className='mb-2 text-gray-500'> <FaUser className="inline-flex items-center w-4 h-4 rounded-full mr-2" />{blog.author}</p>
               <p className='text-sm'>Published: {formattedDate}</p>
-            </Link>
+            </a>
             <div className='mt-4'>
               <button onClick={() => handleEdit(blog)} className="bg-green-400 text-white p-1 rounded mr-2">
                 Edit
@@ -34,6 +50,7 @@ const Blogpost = ({ blogs, handleDelete, handleEdit, currentpage, selectedcatego
           </div>
         );
       })}
+      <AdModal isOpen={isAdOpen} onClose={() => setIsAdOpen(false)} onAdEnd={handleAdEnd} />
     </div>
   );
 }
