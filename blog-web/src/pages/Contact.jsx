@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const ContactPage = () => {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_31gd1bt', 'template_0g5uofr', form.current, {
+        publicKey: 'q66xF5ocoDGdYtP5x',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
   return (
     <>
     <div className="w-full h-[300px] mt-14  text-center text-3xl md:text-5xl font-extrabold ">
@@ -19,7 +38,7 @@ const ContactPage = () => {
         <div className="flex flex-col md:flex-row gap-8">
           {/* Contact Form */}
           <div className="flex-1">
-            <form className="space-y-6">
+            <form className="space-y-6" ref={form} onSubmit={sendEmail}>
               <div>
                 <label
                   htmlFor="name"
@@ -29,6 +48,7 @@ const ContactPage = () => {
                 </label>
                 <input
                   type="text"
+                  name="user_name"
                   id="name"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Your Name"
@@ -44,6 +64,7 @@ const ContactPage = () => {
                 <input
                   type="email"
                   id="email"
+                  name="user_email"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="you@example.com"
                 />
@@ -58,17 +79,17 @@ const ContactPage = () => {
                 <textarea
                   id="message"
                   rows="4"
+                  name="message"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Your message"
                 />
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Send
-                </button>
+              <input
+ type="submit" value="Send"
+  className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+/>
+
               </div>
             </form>
           </div>
