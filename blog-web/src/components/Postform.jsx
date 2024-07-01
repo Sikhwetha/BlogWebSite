@@ -19,7 +19,7 @@ const Postform = () => {
   const [editMode, setEditMode] = useState(false);
   const [postId, setPostId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const pageSize = 10;
+  const pageSize = import.meta.env.VITE_PAGE_SIZE; // Use environment variable
 
   useEffect(() => {
     fetchPosts();
@@ -28,7 +28,7 @@ const Postform = () => {
   const fetchPosts = async (query = "") => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/blogposts/?search=${query}&_=${Date.now()}`
+        `${import.meta.env.VITE_API_BASE_URL}/blogposts/?search=${query}&_=${Date.now()}`
       );
       setPosts(response.data);
     } catch (error) {
@@ -51,7 +51,7 @@ const Postform = () => {
 
       if (editMode) {
         await axios.put(
-          `http://127.0.0.1:8000/api/blogposts/${postId}/`,
+          `${import.meta.env.VITE_API_BASE_URL}/blogposts/${postId}/`,
           formData,
           {
             headers: {
@@ -62,11 +62,15 @@ const Postform = () => {
         setEditMode(false);
         setPostId(null);
       } else {
-        await axios.post("http://127.0.0.1:8000/api/blogposts/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/blogposts/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       }
 
       fetchPosts();
@@ -87,7 +91,7 @@ const Postform = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/blogposts/${id}/`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/blogposts/${id}/`);
       fetchPosts();
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -131,7 +135,7 @@ const Postform = () => {
           onClick={toggleFormVisibility}
           className="bg-green-500 hover:text-orange-500 text-white p-2 rounded capitalize md:mb-4  md:ml-36"
         >
-          {isFormVisible ? "Close Form" : "Post   blog Here"}
+          {isFormVisible ? "Close Form" : "Post blog Here"}
         </button>
       </div>
 

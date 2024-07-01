@@ -8,14 +8,14 @@ import axios from 'axios';
 
 const Blogpage = () => {
   const [blogs, setBlogs] = useState([]);
-  const [currentpage, setCurrentpage] = useState(1); // Changed initialization to a number
-  const pageSize = 12; //blogs per page
+  const [currentpage, setCurrentpage] = useState(1);
+  const pageSize = import.meta.env.VITE_PAGE_SIZE; // Use environment variable
   const [selectedcategory, setSelectedCategory] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
     async function fetchBlogs() {
-      let url = `http://127.0.0.1:8000/api/blogs/?page=${currentpage}&limit=${pageSize}`;
+      let url = `${import.meta.env.VITE_API_BASE_URL}/blogs/?page=${currentpage}&limit=${pageSize}`;
       // filter by category
       if (selectedcategory) {
         url += `&category=${selectedcategory}`;
@@ -25,7 +25,7 @@ const Blogpage = () => {
         const response = await axios.get(url);
         const data = response.data;
         console.log(data);
-        setBlogs(data ); // Assuming data is an array of blogs
+        setBlogs(data); // Assuming data is an array of blogs
       } catch (error) {
         console.error('Error fetching data:', error);
         // Handle error state here if needed
@@ -33,7 +33,6 @@ const Blogpage = () => {
     }
     fetchBlogs();
   }, [currentpage, pageSize, selectedcategory]);
-  
 
   // page changing btn
   const handlePageChange = (pageNumber) => {
